@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家人聊天機器人</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .chat-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatbox {
+            width: 100%;
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .input-area {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        input[type="text"] {
+            width: 85%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            width: 10%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .bot-message {
+            background-color: #e0f7fa;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            text-align: right;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chatbox" id="chatbox"></div>
+    <div class="input-area">
+        <input type="text" id="user-input" placeholder="和我說說話..." />
+        <button onclick="sendMessage()">送出</button>
+    </div>
+</div>
+
+<script>
+    const chatbox = document.getElementById('chatbox');
+    const userInput = document.getElementById('user-input');
+
+    // 發送訊息
+    function sendMessage() {
+        const message = userInput.value;
+        if (message.trim()) {
+            appendMessage(message, 'user');
+            userInput.value = '';
+
+            // 模擬家人機器人的回應
+            setTimeout(() => {
+                const botResponse = generateBotResponse(message);
+                appendMessage(botResponse, 'bot');
+            }, 1000);
+        }
+    }
+
+    // 顯示訊息
+    function appendMessage(message, sender) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+        messageElement.innerText = message;
+        chatbox.appendChild(messageElement);
+        chatbox.scrollTop = chatbox.scrollHeight; // 滾動到底部
+    }
+
+    // 根據用戶的訊息生成家人風格的回應
+    function generateBotResponse(message) {
+        const lowerMessage = message.toLowerCase();
+
+        // 檢查是否有問候語
+        if (lowerMessage.includes("你好") || lowerMessage.includes("哈囉")) {
+            return "嗨！今天過得怎麼樣？有什麼想聊的嗎？";
+        } else if (lowerMessage.includes("你怎麼樣")) {
+            return "我很好哦！我一直在這裡等你來聊。";
+        } else if (lowerMessage.includes("愛你")) {
+            return "我也愛你！永遠支持你，無論何時都在！";
+        } else if (lowerMessage.includes("天氣")) {
+            return "今天的天氣真的很好，適合出門走走喔！";
+        } else if (lowerMessage.includes("謝謝")) {
+            return "不用客氣！隨時都在這裡幫你！";
+        } else if (lowerMessage.includes("怎麼辦") || lowerMessage.includes("幫忙")) {
+            return "別擔心，我會幫你的！我們一起解決問題！";
+        } else {
+            return "我在聽，告訴我更多！我總是樂意和你聊聊天。";
+        }
+    }
+</script>
+
+</body>
+</html>
